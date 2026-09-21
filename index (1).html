@@ -1,0 +1,774 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="NovaCloud - Next-Gen Cloud Orchestration & High-Performance Infrastructure Platform." />
+  <title>NovaCloud — Modern Cloud Infrastructure & Intelligence</title>
+
+  <!-- Google Fonts: Inter & Outfit -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            heading: ['Outfit', 'sans-serif'],
+          },
+          colors: {
+            brand: {
+              50: '#f0fdfa',
+              100: '#ccfbf1',
+              400: '#2dd4bf',
+              500: '#14b8a6',
+              600: '#0d9488',
+            },
+            accent: {
+              400: '#818cf8',
+              500: '#6366f1',
+              600: '#4f46e5',
+            }
+          },
+          animation: {
+            'blob': 'blob 8s infinite',
+            'fade-in': 'fadeIn 0.6s ease-out forwards',
+            'float': 'float 4s ease-in-out infinite',
+            'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+          },
+          keyframes: {
+            blob: {
+              '0%': { transform: 'translate(0px, 0px) scale(1)' },
+              '33%': { transform: 'translate(30px, -40px) scale(1.1)' },
+              '66%': { transform: 'translate(-20px, 20px) scale(0.9)' },
+              '100%': { transform: 'translate(0px, 0px) scale(1)' },
+            },
+            fadeIn: {
+              '0%': { opacity: '0', transform: 'translateY(15px)' },
+              '100%': { opacity: '1', transform: 'translateY(0)' },
+            },
+            float: {
+              '0%, 100%': { transform: 'translateY(0px)' },
+              '50%': { transform: 'translateY(-8px)' },
+            }
+          }
+        }
+      }
+    };
+  </script>
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <style>
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #090d16;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #1e293b;
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #334155;
+    }
+
+    /* Gradient Background Glows */
+    .bg-radial-glow {
+      background: radial-gradient(circle at 50% 0%, rgba(99, 102, 241, 0.18), transparent 70%);
+    }
+
+    .glass-card {
+      background: rgba(15, 23, 42, 0.65);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .glass-card:hover {
+      border-color: rgba(99, 102, 241, 0.35);
+      box-shadow: 0 10px 35px -10px rgba(99, 102, 241, 0.2);
+    }
+  </style>
+</head>
+<body class="bg-slate-950 text-slate-100 font-sans antialiased selection:bg-indigo-500 selection:text-white min-h-screen relative overflow-x-hidden">
+
+  <!-- Ambient Glow Elements -->
+  <div class="fixed top-0 left-1/2 -translate-x-1/2 w-full max-w-7xl h-[500px] bg-radial-glow pointer-events-none -z-10"></div>
+  <div class="fixed top-[-150px] left-[-100px] w-96 h-96 bg-indigo-600/15 rounded-full blur-3xl filter animate-blob pointer-events-none -z-10"></div>
+  <div class="fixed top-[250px] right-[-100px] w-96 h-96 bg-teal-500/15 rounded-full blur-3xl filter animate-blob [animation-delay:2s] pointer-events-none -z-10"></div>
+
+  <!-- ==================== HEADER & NAVBAR ==================== -->
+  <header id="header" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-20">
+        
+        <!-- Logo -->
+        <a href="#" class="flex items-center gap-3 group focus:outline-none">
+          <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-indigo-600 via-indigo-500 to-teal-400 p-[1px] shadow-lg shadow-indigo-500/25 transition-transform duration-300 group-hover:scale-105">
+            <div class="w-full h-full bg-slate-950 rounded-[11px] flex items-center justify-center">
+              <i data-lucide="cloud-lightning" class="w-5 h-5 text-indigo-400 group-hover:text-teal-300 transition-colors"></i>
+            </div>
+          </div>
+          <span class="font-heading font-bold text-xl tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-white via-slate-100 to-slate-400">
+            Nova<span class="text-indigo-400">Cloud</span>
+          </span>
+        </a>
+
+        <!-- Desktop Nav Links -->
+        <nav class="hidden md:flex items-center gap-1 bg-slate-900/60 border border-slate-800/80 backdrop-blur-xl rounded-full px-4 py-1.5 shadow-inner">
+          <a href="#features" class="px-3.5 py-1.5 text-sm font-medium text-slate-300 hover:text-white rounded-full transition-colors hover:bg-slate-800/50">Features</a>
+          <a href="#solutions" class="px-3.5 py-1.5 text-sm font-medium text-slate-300 hover:text-white rounded-full transition-colors hover:bg-slate-800/50">Solutions</a>
+          <a href="#metrics" class="px-3.5 py-1.5 text-sm font-medium text-slate-300 hover:text-white rounded-full transition-colors hover:bg-slate-800/50">Metrics</a>
+          <a href="#pricing" class="px-3.5 py-1.5 text-sm font-medium text-slate-300 hover:text-white rounded-full transition-colors hover:bg-slate-800/50">Pricing</a>
+          <a href="#testimonials" class="px-3.5 py-1.5 text-sm font-medium text-slate-300 hover:text-white rounded-full transition-colors hover:bg-slate-800/50">Customers</a>
+        </nav>
+
+        <!-- Right Action CTA -->
+        <div class="hidden md:flex items-center gap-4">
+          <a href="#signin" class="text-sm font-medium text-slate-300 hover:text-white transition-colors">Sign In</a>
+          <a href="#get-started" class="relative group inline-flex items-center gap-2 px-5 py-2.5 text-sm font-semibold text-white rounded-full bg-gradient-to-r from-indigo-600 to-teal-500 hover:from-indigo-500 hover:to-teal-400 shadow-md shadow-indigo-600/20 hover:shadow-indigo-500/35 transition-all duration-200">
+            <span>Get Started</span>
+            <i data-lucide="arrow-right" class="w-4 h-4 transition-transform group-hover:translate-x-1"></i>
+          </a>
+        </div>
+
+        <!-- Mobile Menu Hamburger Button -->
+        <div class="flex md:hidden">
+          <button id="mobileMenuBtn" type="button" aria-label="Toggle menu" class="p-2.5 rounded-xl bg-slate-900 border border-slate-800 text-slate-400 hover:text-white hover:bg-slate-800 focus:outline-none">
+            <i id="menuOpenIcon" data-lucide="menu" class="w-6 h-6"></i>
+            <i id="menuCloseIcon" data-lucide="x" class="w-6 h-6 hidden"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mobile Dropdown Menu -->
+    <div id="mobileMenu" class="hidden md:hidden border-b border-slate-800 bg-slate-950/95 backdrop-blur-2xl transition-all duration-300">
+      <div class="px-5 pt-3 pb-6 space-y-2">
+        <a href="#features" class="block px-3 py-2 rounded-lg text-base font-medium text-slate-300 hover:text-white hover:bg-slate-900 transition-colors">Features</a>
+        <a href="#solutions" class="block px-3 py-2 rounded-lg text-base font-medium text-slate-300 hover:text-white hover:bg-slate-900 transition-colors">Solutions</a>
+        <a href="#metrics" class="block px-3 py-2 rounded-lg text-base font-medium text-slate-300 hover:text-white hover:bg-slate-900 transition-colors">Metrics</a>
+        <a href="#pricing" class="block px-3 py-2 rounded-lg text-base font-medium text-slate-300 hover:text-white hover:bg-slate-900 transition-colors">Pricing</a>
+        <a href="#testimonials" class="block px-3 py-2 rounded-lg text-base font-medium text-slate-300 hover:text-white hover:bg-slate-900 transition-colors">Customers</a>
+        <div class="pt-4 flex flex-col gap-3 border-t border-slate-800/80">
+          <a href="#signin" class="w-full text-center py-2.5 text-sm font-medium text-slate-300 hover:text-white bg-slate-900 rounded-xl">Sign In</a>
+          <a href="#get-started" class="w-full text-center py-2.5 text-sm font-semibold text-white bg-gradient-to-r from-indigo-600 to-teal-500 rounded-xl shadow-lg">Start Free Trial</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- ==================== HERO SECTION ==================== -->
+    <section class="relative pt-32 pb-20 md:pt-44 md:pb-32 overflow-hidden">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        
+        <!-- Badge -->
+        <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-indigo-500/30 bg-indigo-500/10 backdrop-blur-md mb-8 hover:bg-indigo-500/15 transition cursor-pointer">
+          <span class="flex h-2 w-2 rounded-full bg-teal-400 animate-ping"></span>
+          <span class="text-xs font-semibold uppercase tracking-wider text-indigo-300">NovaCloud 2.0 Released</span>
+          <span class="text-slate-400 text-xs">•</span>
+          <span class="text-xs text-slate-300 flex items-center gap-1 font-medium">Explore AI Orchestration <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i></span>
+        </div>
+
+        <!-- Main Headline -->
+        <h1 class="font-heading text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight max-w-5xl mx-auto leading-[1.15] text-white">
+          Deploy & Scale Cloud Workloads <br class="hidden sm:inline" />
+          <span class="bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 via-teal-300 to-indigo-300">
+            With Sub-Second Latency
+          </span>
+        </h1>
+
+        <!-- Subheading -->
+        <p class="mt-6 text-lg sm:text-xl text-slate-400 max-w-2xl mx-auto leading-relaxed">
+          The all-in-one distributed cloud platform built for engineering teams. Automate multi-region deployments, optimize GPU workloads, and monitor global clusters with zero configuration.
+        </p>
+
+        <!-- CTA Buttons -->
+        <div class="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
+          <a href="#get-started" class="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-8 py-4 text-base font-semibold text-white rounded-2xl bg-gradient-to-r from-indigo-600 via-indigo-500 to-teal-500 hover:from-indigo-500 hover:to-teal-400 shadow-xl shadow-indigo-600/30 hover:scale-[1.02] active:scale-[0.98] transition-all">
+            <i data-lucide="zap" class="w-5 h-5 fill-current"></i>
+            <span>Deploy Free in 60s</span>
+          </a>
+          <a href="#demo" class="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-8 py-4 text-base font-medium text-slate-300 hover:text-white rounded-2xl bg-slate-900/80 border border-slate-800 hover:border-slate-700 hover:bg-slate-800/80 backdrop-blur-xl transition-all">
+            <i data-lucide="play-circle" class="w-5 h-5 text-teal-400"></i>
+            <span>Watch 2-Min Demo</span>
+          </a>
+        </div>
+
+        <!-- Key Highlights / Guarantees -->
+        <div class="mt-8 flex flex-wrap items-center justify-center gap-6 text-xs sm:text-sm text-slate-400">
+          <div class="flex items-center gap-1.5">
+            <i data-lucide="check-circle-2" class="w-4 h-4 text-teal-400"></i>
+            <span>No credit card required</span>
+          </div>
+          <div class="flex items-center gap-1.5">
+            <i data-lucide="check-circle-2" class="w-4 h-4 text-teal-400"></i>
+            <span>$200 Free credits included</span>
+          </div>
+          <div class="flex items-center gap-1.5">
+            <i data-lucide="check-circle-2" class="w-4 h-4 text-teal-400"></i>
+            <span>99.999% SLA Uptime</span>
+          </div>
+        </div>
+
+        <!-- Hero Interactive Visual / Mockup Preview -->
+        <div class="mt-14 relative max-w-5xl mx-auto">
+          <!-- Glow underneath frame -->
+          <div class="absolute -inset-1.5 bg-gradient-to-r from-indigo-500 to-teal-400 rounded-3xl blur-2xl opacity-20 group-hover:opacity-40 transition duration-1000 animate-pulse-slow"></div>
+
+          <div class="relative rounded-2xl bg-slate-900/90 border border-slate-800/80 p-3 sm:p-5 shadow-2xl backdrop-blur-xl">
+            <!-- Window Bar -->
+            <div class="flex items-center justify-between pb-4 border-b border-slate-800/80">
+              <div class="flex items-center gap-2">
+                <span class="w-3 h-3 rounded-full bg-rose-500/80"></span>
+                <span class="w-3 h-3 rounded-full bg-amber-500/80"></span>
+                <span class="w-3 h-3 rounded-full bg-emerald-500/80"></span>
+                <span class="ml-2 text-xs font-mono text-slate-400 hidden sm:inline">cluster-us-east-prod.novacloud.io</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-500/10 text-emerald-400 text-xs font-medium border border-emerald-500/20">
+                  <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                  Active Nodes: 1,420
+                </span>
+              </div>
+            </div>
+
+            <!-- Dashboard Grid Preview -->
+            <div class="mt-4 grid grid-cols-1 md:grid-cols-3 gap-4 text-left font-mono">
+              <!-- Card 1: Live Traffic -->
+              <div class="p-4 rounded-xl bg-slate-950/60 border border-slate-800/60">
+                <div class="flex items-center justify-between text-xs text-slate-400">
+                  <span>Global Ingress</span>
+                  <span class="text-teal-400">+18.4%</span>
+                </div>
+                <div class="mt-2 text-2xl font-bold font-sans text-white">4.89M <span class="text-xs font-normal text-slate-400">req/s</span></div>
+                <div class="mt-3 h-1.5 w-full bg-slate-800 rounded-full overflow-hidden">
+                  <div class="h-full bg-gradient-to-r from-indigo-500 to-teal-400 w-3/4 rounded-full"></div>
+                </div>
+              </div>
+
+              <!-- Card 2: Edge Latency -->
+              <div class="p-4 rounded-xl bg-slate-950/60 border border-slate-800/60">
+                <div class="flex items-center justify-between text-xs text-slate-400">
+                  <span>P99 Edge Latency</span>
+                  <span class="text-emerald-400">Optimal</span>
+                </div>
+                <div class="mt-2 text-2xl font-bold font-sans text-white">8.42 <span class="text-xs font-normal text-slate-400">ms</span></div>
+                <div class="mt-3 flex items-center gap-1 text-[11px] text-slate-400 font-sans">
+                  <i data-lucide="globe" class="w-3.5 h-3.5 text-indigo-400"></i>
+                  <span>340 Edge PoPs Connected</span>
+                </div>
+              </div>
+
+              <!-- Card 3: AI Cluster Utilization -->
+              <div class="p-4 rounded-xl bg-slate-950/60 border border-slate-800/60">
+                <div class="flex items-center justify-between text-xs text-slate-400">
+                  <span>GPU Cluster Load</span>
+                  <span class="text-indigo-400">Auto-tuned</span>
+                </div>
+                <div class="mt-2 text-2xl font-bold font-sans text-white">92.4% <span class="text-xs font-normal text-slate-400">vRAM Eff.</span></div>
+                <div class="mt-3 flex items-center gap-1 text-[11px] text-teal-400 font-sans">
+                  <i data-lucide="shield-check" class="w-3.5 h-3.5"></i>
+                  <span>Zero cold starts active</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Code Simulation Strip -->
+            <div class="mt-4 p-3.5 rounded-xl bg-slate-950/90 border border-slate-800 text-left font-mono text-xs text-slate-300 flex items-center justify-between overflow-x-auto">
+              <div class="flex items-center gap-2">
+                <span class="text-indigo-400">$</span>
+                <span>nova deploy --region global --env production --auto-scale true</span>
+              </div>
+              <span class="text-teal-400 text-xs hidden sm:inline">✓ Deployed in 840ms</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Brand Logos Carousel/Bar -->
+        <div class="mt-20 border-t border-slate-900 pt-10">
+          <p class="text-xs uppercase tracking-widest text-slate-500 font-semibold mb-6">Trusted by fast-moving engineering teams globally</p>
+          <div class="flex flex-wrap items-center justify-center gap-8 md:gap-16 opacity-60 grayscale hover:grayscale-0 transition-all duration-300">
+            <span class="font-heading font-bold text-xl text-slate-300 flex items-center gap-2"><i data-lucide="layers" class="w-5 h-5 text-indigo-400"></i> NexaCorp</span>
+            <span class="font-heading font-bold text-xl text-slate-300 flex items-center gap-2"><i data-lucide="cpu" class="w-5 h-5 text-teal-400"></i> QuantumScale</span>
+            <span class="font-heading font-bold text-xl text-slate-300 flex items-center gap-2"><i data-lucide="shield" class="w-5 h-5 text-indigo-400"></i> HyperGuard</span>
+            <span class="font-heading font-bold text-xl text-slate-300 flex items-center gap-2"><i data-lucide="orbit" class="w-5 h-5 text-teal-400"></i> OrbitData</span>
+            <span class="font-heading font-bold text-xl text-slate-300 flex items-center gap-2"><i data-lucide="server" class="w-5 h-5 text-indigo-400"></i> VertexStack</span>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ==================== FEATURES / CARDS SECTION ==================== -->
+    <section id="features" class="py-24 relative bg-slate-950/50">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <!-- Section Header -->
+        <div class="text-center max-w-3xl mx-auto mb-16">
+          <h2 class="text-xs uppercase tracking-widest font-bold text-indigo-400 mb-3">Enterprise Core Features</h2>
+          <p class="font-heading text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
+            Built for developers who demand perfection and speed
+          </p>
+          <p class="mt-4 text-base sm:text-lg text-slate-400">
+            Say goodbye to complex cloud configs. Get instant compute, automated security, and global presence right out of the box.
+          </p>
+        </div>
+
+        <!-- 6 Feature Cards Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+          
+          <!-- Card 1 -->
+          <div class="glass-card rounded-2xl p-7 transition-all duration-300 hover:-translate-y-1.5 flex flex-col justify-between group">
+            <div>
+              <div class="w-12 h-12 rounded-xl bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center text-indigo-400 mb-6 group-hover:scale-110 group-hover:bg-indigo-500/20 group-hover:text-indigo-300 transition-all">
+                <i data-lucide="rocket" class="w-6 h-6"></i>
+              </div>
+              <h3 class="font-heading text-xl font-bold text-white mb-2 group-hover:text-indigo-300 transition-colors">Instant Global Edge Deploy</h3>
+              <p class="text-slate-400 text-sm leading-relaxed">
+                Push your git repo and deploy code to over 340+ edge PoPs across the globe in seconds with automatic rollback safety.
+              </p>
+            </div>
+            <div class="mt-6 pt-4 border-t border-slate-800/60 flex items-center justify-between text-xs text-slate-400">
+              <span class="font-medium text-indigo-400">Zero Cold Starts</span>
+              <i data-lucide="arrow-up-right" class="w-4 h-4 text-slate-500 group-hover:text-indigo-400 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all"></i>
+            </div>
+          </div>
+
+          <!-- Card 2 -->
+          <div class="glass-card rounded-2xl p-7 transition-all duration-300 hover:-translate-y-1.5 flex flex-col justify-between group">
+            <div>
+              <div class="w-12 h-12 rounded-xl bg-teal-500/10 border border-teal-500/20 flex items-center justify-center text-teal-400 mb-6 group-hover:scale-110 group-hover:bg-teal-500/20 group-hover:text-teal-300 transition-all">
+                <i data-lucide="cpu" class="w-6 h-6"></i>
+              </div>
+              <h3 class="font-heading text-xl font-bold text-white mb-2 group-hover:text-teal-300 transition-colors">AI & GPU Inference Mesh</h3>
+              <p class="text-slate-400 text-sm leading-relaxed">
+                Orchestrate NVIDIA H100 and A100 GPU clusters dynamically for fine-tuning, training, and ultra-fast LLM inference streaming.
+              </p>
+            </div>
+            <div class="mt-6 pt-4 border-t border-slate-800/60 flex items-center justify-between text-xs text-slate-400">
+              <span class="font-medium text-teal-400">TensorRT Optimized</span>
+              <i data-lucide="arrow-up-right" class="w-4 h-4 text-slate-500 group-hover:text-teal-400 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all"></i>
+            </div>
+          </div>
+
+          <!-- Card 3 -->
+          <div class="glass-card rounded-2xl p-7 transition-all duration-300 hover:-translate-y-1.5 flex flex-col justify-between group">
+            <div>
+              <div class="w-12 h-12 rounded-xl bg-violet-500/10 border border-violet-500/20 flex items-center justify-center text-violet-400 mb-6 group-hover:scale-110 group-hover:bg-violet-500/20 group-hover:text-violet-300 transition-all">
+                <i data-lucide="shield-check" class="w-6 h-6"></i>
+              </div>
+              <h3 class="font-heading text-xl font-bold text-white mb-2 group-hover:text-violet-300 transition-colors">Autonomous Zero-Trust IAM</h3>
+              <p class="text-slate-400 text-sm leading-relaxed">
+                Bank-grade SOC2 Type II, HIPAA & GDPR compliance out of the box. Automatic mTLS cryptographic rotation across services.
+              </p>
+            </div>
+            <div class="mt-6 pt-4 border-t border-slate-800/60 flex items-center justify-between text-xs text-slate-400">
+              <span class="font-medium text-violet-400">mTLS 1.3 Strict</span>
+              <i data-lucide="arrow-up-right" class="w-4 h-4 text-slate-500 group-hover:text-violet-400 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all"></i>
+            </div>
+          </div>
+
+          <!-- Card 4 -->
+          <div class="glass-card rounded-2xl p-7 transition-all duration-300 hover:-translate-y-1.5 flex flex-col justify-between group">
+            <div>
+              <div class="w-12 h-12 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400 mb-6 group-hover:scale-110 group-hover:bg-emerald-500/20 group-hover:text-emerald-300 transition-all">
+                <i data-lucide="activity" class="w-6 h-6"></i>
+              </div>
+              <h3 class="font-heading text-xl font-bold text-white mb-2 group-hover:text-emerald-300 transition-colors">Sub-Millisecond Telemetry</h3>
+              <p class="text-slate-400 text-sm leading-relaxed">
+                Full-stack distributed tracing and live observability. Detect bottlenecks before they impact your end-users.
+              </p>
+            </div>
+            <div class="mt-6 pt-4 border-t border-slate-800/60 flex items-center justify-between text-xs text-slate-400">
+              <span class="font-medium text-emerald-400">OpenTelemetry Ready</span>
+              <i data-lucide="arrow-up-right" class="w-4 h-4 text-slate-500 group-hover:text-emerald-400 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all"></i>
+            </div>
+          </div>
+
+          <!-- Card 5 -->
+          <div class="glass-card rounded-2xl p-7 transition-all duration-300 hover:-translate-y-1.5 flex flex-col justify-between group">
+            <div>
+              <div class="w-12 h-12 rounded-xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-400 mb-6 group-hover:scale-110 group-hover:bg-amber-500/20 group-hover:text-amber-300 transition-all">
+                <i data-lucide="dollar-sign" class="w-6 h-6"></i>
+              </div>
+              <h3 class="font-heading text-xl font-bold text-white mb-2 group-hover:text-amber-300 transition-colors">Smart Cost Optimization</h3>
+              <p class="text-slate-400 text-sm leading-relaxed">
+                Autonomous right-sizing and spot instance bidding cuts AWS & GCP cloud spend by up to 45% without risking availability.
+              </p>
+            </div>
+            <div class="mt-6 pt-4 border-t border-slate-800/60 flex items-center justify-between text-xs text-slate-400">
+              <span class="font-medium text-amber-400">Avg 42% Savings</span>
+              <i data-lucide="arrow-up-right" class="w-4 h-4 text-slate-500 group-hover:text-amber-400 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all"></i>
+            </div>
+          </div>
+
+          <!-- Card 6 -->
+          <div class="glass-card rounded-2xl p-7 transition-all duration-300 hover:-translate-y-1.5 flex flex-col justify-between group">
+            <div>
+              <div class="w-12 h-12 rounded-xl bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center text-cyan-400 mb-6 group-hover:scale-110 group-hover:bg-cyan-500/20 group-hover:text-cyan-300 transition-all">
+                <i data-lucide="database" class="w-6 h-6"></i>
+              </div>
+              <h3 class="font-heading text-xl font-bold text-white mb-2 group-hover:text-cyan-300 transition-colors">Serverless Edge Storage</h3>
+              <p class="text-slate-400 text-sm leading-relaxed">
+                Geo-replicated key-value, vector embeddings, and object storage synchronizes data at lightspeed to every continent.
+              </p>
+            </div>
+            <div class="mt-6 pt-4 border-t border-slate-800/60 flex items-center justify-between text-xs text-slate-400">
+              <span class="font-medium text-cyan-400">Global Read Latency &lt;5ms</span>
+              <i data-lucide="arrow-up-right" class="w-4 h-4 text-slate-500 group-hover:text-cyan-400 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all"></i>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ==================== METRICS / STATS SECTION ==================== -->
+    <section id="metrics" class="py-20 border-y border-slate-900 bg-slate-900/30">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-8 text-center">
+          
+          <div class="p-6 rounded-2xl bg-slate-950/40 border border-slate-800/50">
+            <div class="font-heading text-4xl sm:text-5xl font-extrabold text-white bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 to-teal-400">
+              99.999%
+            </div>
+            <p class="mt-2 text-sm text-slate-400 font-medium">Guaranteed SLA Uptime</p>
+          </div>
+
+          <div class="p-6 rounded-2xl bg-slate-950/40 border border-slate-800/50">
+            <div class="font-heading text-4xl sm:text-5xl font-extrabold text-white bg-clip-text text-transparent bg-gradient-to-r from-teal-400 to-indigo-400">
+              &lt;10ms
+            </div>
+            <p class="mt-2 text-sm text-slate-400 font-medium">Median Global Latency</p>
+          </div>
+
+          <div class="p-6 rounded-2xl bg-slate-950/40 border border-slate-800/50">
+            <div class="font-heading text-4xl sm:text-5xl font-extrabold text-white bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 to-teal-400">
+              12B+
+            </div>
+            <p class="mt-2 text-sm text-slate-400 font-medium">Monthly Requests Handled</p>
+          </div>
+
+          <div class="p-6 rounded-2xl bg-slate-950/40 border border-slate-800/50">
+            <div class="font-heading text-4xl sm:text-5xl font-extrabold text-white bg-clip-text text-transparent bg-gradient-to-r from-teal-400 to-indigo-400">
+              340+
+            </div>
+            <p class="mt-2 text-sm text-slate-400 font-medium">Worldwide Edge Data Centers</p>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== PRICING CARDS SECTION ==================== -->
+    <section id="pricing" class="py-24 relative">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <div class="text-center max-w-3xl mx-auto mb-16">
+          <h2 class="text-xs uppercase tracking-widest font-bold text-teal-400 mb-3">Transparent Pricing</h2>
+          <p class="font-heading text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
+            Predictable plans that scale seamlessly with your needs
+          </p>
+          <p class="mt-4 text-base sm:text-lg text-slate-400">
+            No surprise bandwidth fees. Start free and upgrade whenever your architecture needs it.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-stretch">
+          
+          <!-- Starter Plan -->
+          <div class="glass-card rounded-3xl p-8 flex flex-col justify-between border border-slate-800">
+            <div>
+              <span class="inline-block px-3 py-1 rounded-full text-xs font-semibold bg-slate-800 text-slate-300">Starter</span>
+              <div class="mt-4 flex items-baseline gap-1">
+                <span class="text-4xl sm:text-5xl font-heading font-extrabold text-white">$0</span>
+                <span class="text-slate-400 text-sm">/month forever</span>
+              </div>
+              <p class="mt-3 text-sm text-slate-400">Ideal for hobbyists, side-projects, and proof-of-concepts.</p>
+
+              <ul class="mt-8 space-y-3.5 text-sm text-slate-300">
+                <li class="flex items-center gap-3">
+                  <i data-lucide="check" class="w-4 h-4 text-teal-400"></i>
+                  <span>Up to 3 micro-clusters</span>
+                </li>
+                <li class="flex items-center gap-3">
+                  <i data-lucide="check" class="w-4 h-4 text-teal-400"></i>
+                  <span>100 GB Bandwidth/mo</span>
+                </li>
+                <li class="flex items-center gap-3">
+                  <i data-lucide="check" class="w-4 h-4 text-teal-400"></i>
+                  <span>Global CDN integration</span>
+                </li>
+                <li class="flex items-center gap-3">
+                  <i data-lucide="check" class="w-4 h-4 text-teal-400"></i>
+                  <span>Community Discord support</span>
+                </li>
+              </ul>
+            </div>
+
+            <div class="mt-8">
+              <a href="#get-started" class="block w-full text-center py-3 px-4 rounded-xl text-sm font-semibold bg-slate-800 hover:bg-slate-700 text-white transition-colors">
+                Start Free
+              </a>
+            </div>
+          </div>
+
+          <!-- Pro Plan (Featured) -->
+          <div class="relative glass-card rounded-3xl p-8 flex flex-col justify-between border-2 border-indigo-500/80 bg-slate-900/90 shadow-2xl shadow-indigo-600/20">
+            <div class="absolute -top-3.5 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full text-xs font-bold bg-gradient-to-r from-indigo-500 to-teal-400 text-slate-950 uppercase tracking-wider shadow-md">
+              Most Popular
+            </div>
+
+            <div>
+              <span class="inline-block px-3 py-1 rounded-full text-xs font-semibold bg-indigo-500/20 text-indigo-300">Pro Developer</span>
+              <div class="mt-4 flex items-baseline gap-1">
+                <span class="text-4xl sm:text-5xl font-heading font-extrabold text-white">$49</span>
+                <span class="text-slate-400 text-sm">/month</span>
+              </div>
+              <p class="mt-3 text-sm text-slate-400">For fast-growing startups requiring auto-scaling & GPU power.</p>
+
+              <ul class="mt-8 space-y-3.5 text-sm text-slate-300">
+                <li class="flex items-center gap-3">
+                  <i data-lucide="check" class="w-4 h-4 text-teal-400"></i>
+                  <span class="font-medium text-white">Unlimited micro-services</span>
+                </li>
+                <li class="flex items-center gap-3">
+                  <i data-lucide="check" class="w-4 h-4 text-teal-400"></i>
+                  <span>2 TB Global Bandwidth</span>
+                </li>
+                <li class="flex items-center gap-3">
+                  <i data-lucide="check" class="w-4 h-4 text-teal-400"></i>
+                  <span>GPU Inference compute access</span>
+                </li>
+                <li class="flex items-center gap-3">
+                  <i data-lucide="check" class="w-4 h-4 text-teal-400"></i>
+                  <span>Custom Domains & SSL</span>
+                </li>
+                <li class="flex items-center gap-3">
+                  <i data-lucide="check" class="w-4 h-4 text-teal-400"></i>
+                  <span>24/7 Priority Support (15m SLA)</span>
+                </li>
+              </ul>
+            </div>
+
+            <div class="mt-8">
+              <a href="#get-started" class="block w-full text-center py-3.5 px-4 rounded-xl text-sm font-semibold bg-gradient-to-r from-indigo-600 to-teal-500 hover:from-indigo-500 hover:to-teal-400 text-white shadow-lg shadow-indigo-600/30 hover:scale-[1.01] transition-all">
+                Start 14-Day Free Pro Trial
+              </a>
+            </div>
+          </div>
+
+          <!-- Enterprise Plan -->
+          <div class="glass-card rounded-3xl p-8 flex flex-col justify-between border border-slate-800">
+            <div>
+              <span class="inline-block px-3 py-1 rounded-full text-xs font-semibold bg-slate-800 text-slate-300">Enterprise</span>
+              <div class="mt-4 flex items-baseline gap-1">
+                <span class="text-4xl sm:text-5xl font-heading font-extrabold text-white">$299</span>
+                <span class="text-slate-400 text-sm">/month + usage</span>
+              </div>
+              <p class="mt-3 text-sm text-slate-400">Dedicated infrastructure, bespoke compliance & SLA guarantees.</p>
+
+              <ul class="mt-8 space-y-3.5 text-sm text-slate-300">
+                <li class="flex items-center gap-3">
+                  <i data-lucide="check" class="w-4 h-4 text-teal-400"></i>
+                  <span>Dedicated Bare-Metal VPC</span>
+                </li>
+                <li class="flex items-center gap-3">
+                  <i data-lucide="check" class="w-4 h-4 text-teal-400"></i>
+                  <span>Unlimited Bandwidth & Storage</span>
+                </li>
+                <li class="flex items-center gap-3">
+                  <i data-lucide="check" class="w-4 h-4 text-teal-400"></i>
+                  <span>SOC2 Type II & HIPAA BAA Signed</span>
+                </li>
+                <li class="flex items-center gap-3">
+                  <i data-lucide="check" class="w-4 h-4 text-teal-400"></i>
+                  <span>Dedicated Solutions Architect</span>
+                </li>
+              </ul>
+            </div>
+
+            <div class="mt-8">
+              <a href="#contact" class="block w-full text-center py-3 px-4 rounded-xl text-sm font-semibold bg-slate-800 hover:bg-slate-700 text-white transition-colors">
+                Contact Sales
+              </a>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ==================== CTA BANNER ==================== -->
+    <section class="py-20 relative overflow-hidden">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="relative rounded-3xl bg-gradient-to-r from-indigo-900/60 via-slate-900/90 to-teal-950/60 border border-indigo-500/30 p-8 sm:p-14 text-center overflow-hidden shadow-2xl backdrop-blur-2xl">
+          
+          <div class="absolute -top-24 -left-24 w-60 h-60 bg-indigo-500/20 rounded-full blur-3xl pointer-events-none"></div>
+          <div class="absolute -bottom-24 -right-24 w-60 h-60 bg-teal-500/20 rounded-full blur-3xl pointer-events-none"></div>
+
+          <h2 class="font-heading text-3xl sm:text-5xl font-extrabold text-white tracking-tight">
+            Ready to accelerate your infrastructure?
+          </h2>
+          <p class="mt-4 text-base sm:text-lg text-slate-300 max-w-xl mx-auto">
+            Join thousands of developers deploying world-class microservices with automated scaling and zero headaches.
+          </p>
+
+          <form class="mt-8 max-w-md mx-auto flex flex-col sm:flex-row gap-3" onsubmit="event.preventDefault(); alert('Welcome to NovaCloud! Access link dispatched.');">
+            <input 
+              type="email" 
+              required 
+              placeholder="Enter your work email..." 
+              class="flex-1 px-4 py-3.5 rounded-xl bg-slate-950/80 border border-slate-700 text-white placeholder:text-slate-500 focus:outline-none focus:border-indigo-400 text-sm"
+            />
+            <button 
+              type="submit" 
+              class="px-6 py-3.5 rounded-xl font-semibold text-sm text-slate-950 bg-gradient-to-r from-teal-300 to-teal-400 hover:from-teal-200 hover:to-teal-300 transition-all duration-200 shadow-md whitespace-nowrap"
+            >
+              Get Free Access
+            </button>
+          </form>
+
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ==================== FOOTER ==================== -->
+  <footer class="bg-slate-950 border-t border-slate-900 text-slate-400 text-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+      <div class="grid grid-cols-2 md:grid-cols-5 gap-8 lg:gap-12">
+        
+        <!-- Brand Info -->
+        <div class="col-span-2 space-y-4">
+          <a href="#" class="flex items-center gap-3">
+            <div class="w-8 h-8 rounded-lg bg-gradient-to-tr from-indigo-600 to-teal-400 p-[1px]">
+              <div class="w-full h-full bg-slate-950 rounded-[7px] flex items-center justify-center">
+                <i data-lucide="cloud-lightning" class="w-4 h-4 text-indigo-400"></i>
+              </div>
+            </div>
+            <span class="font-heading font-bold text-lg text-white">Nova<span class="text-indigo-400">Cloud</span></span>
+          </a>
+          <p class="text-slate-400 text-xs sm:text-sm max-w-sm leading-relaxed">
+            The next-generation distributed cloud orchestration platform designed for speed, resilience, and effortless multi-cloud deployments.
+          </p>
+          <div class="flex items-center gap-4 text-slate-400 pt-2">
+            <a href="#" aria-label="GitHub" class="hover:text-white transition-colors"><i data-lucide="github" class="w-5 h-5"></i></a>
+            <a href="#" aria-label="Twitter" class="hover:text-white transition-colors"><i data-lucide="twitter" class="w-5 h-5"></i></a>
+            <a href="#" aria-label="LinkedIn" class="hover:text-white transition-colors"><i data-lucide="linkedin" class="w-5 h-5"></i></a>
+            <a href="#" aria-label="MessageSquare" class="hover:text-white transition-colors"><i data-lucide="message-square" class="w-5 h-5"></i></a>
+          </div>
+        </div>
+
+        <!-- Links Column 1 -->
+        <div>
+          <h4 class="font-heading font-semibold text-white text-sm mb-4">Product</h4>
+          <ul class="space-y-2.5 text-xs sm:text-sm">
+            <li><a href="#features" class="hover:text-white transition-colors">Edge Deployments</a></li>
+            <li><a href="#features" class="hover:text-white transition-colors">GPU Clusters</a></li>
+            <li><a href="#features" class="hover:text-white transition-colors">Serverless Storage</a></li>
+            <li><a href="#pricing" class="hover:text-white transition-colors">Pricing & Plans</a></li>
+            <li><a href="#" class="hover:text-white transition-colors">Changelog</a></li>
+          </ul>
+        </div>
+
+        <!-- Links Column 2 -->
+        <div>
+          <h4 class="font-heading font-semibold text-white text-sm mb-4">Resources</h4>
+          <ul class="space-y-2.5 text-xs sm:text-sm">
+            <li><a href="#" class="hover:text-white transition-colors">Documentation</a></li>
+            <li><a href="#" class="hover:text-white transition-colors">API Reference</a></li>
+            <li><a href="#" class="hover:text-white transition-colors">CLI Guides</a></li>
+            <li><a href="#" class="hover:text-white transition-colors">Community Forum</a></li>
+            <li><a href="#" class="hover:text-white transition-colors">Architecture Patterns</a></li>
+          </ul>
+        </div>
+
+        <!-- Links Column 3 -->
+        <div>
+          <h4 class="font-heading font-semibold text-white text-sm mb-4">Company</h4>
+          <ul class="space-y-2.5 text-xs sm:text-sm">
+            <li><a href="#" class="hover:text-white transition-colors">About Us</a></li>
+            <li><a href="#" class="hover:text-white transition-colors">Careers</a></li>
+            <li><a href="#" class="hover:text-white transition-colors">Security & Trust</a></li>
+            <li><a href="#" class="hover:text-white transition-colors">Privacy Policy</a></li>
+            <li><a href="#" class="hover:text-white transition-colors">Terms of Service</a></li>
+          </ul>
+        </div>
+
+      </div>
+
+      <!-- Bottom Bar -->
+      <div class="mt-12 pt-8 border-t border-slate-900/80 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500">
+        <div>
+          &copy; <span id="currentYear"></span> NovaCloud Technologies Inc. All rights reserved.
+        </div>
+        <div class="flex items-center gap-2">
+          <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+          <span class="text-slate-400">All systems 100% operational</span>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Script for interactivity -->
+  <script>
+    // Initialize Lucide Icons
+    lucide.createIcons();
+
+    // Set Dynamic Year
+    document.getElementById('currentYear').textContent = new Date().getFullYear();
+
+    // Mobile Menu Toggle
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+    const menuOpenIcon = document.getElementById('menuOpenIcon');
+    const menuCloseIcon = document.getElementById('menuCloseIcon');
+
+    mobileMenuBtn.addEventListener('click', () => {
+      const isClosed = mobileMenu.classList.contains('hidden');
+      if (isClosed) {
+        mobileMenu.classList.remove('hidden');
+        menuOpenIcon.classList.add('hidden');
+        menuCloseIcon.classList.remove('hidden');
+      } else {
+        mobileMenu.classList.add('hidden');
+        menuOpenIcon.classList.remove('hidden');
+        menuCloseIcon.classList.add('hidden');
+      }
+    });
+
+    // Close mobile menu on clicking any link
+    mobileMenu.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        mobileMenu.classList.add('hidden');
+        menuOpenIcon.classList.remove('hidden');
+        menuCloseIcon.classList.add('hidden');
+      });
+    });
+
+    // Sticky Header Blur effect on Scroll
+    const header = document.getElementById('header');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 20) {
+        header.classList.add('bg-slate-950/80', 'backdrop-blur-xl', 'border-b', 'border-slate-800/80', 'shadow-lg');
+      } else {
+        header.classList.remove('bg-slate-950/80', 'backdrop-blur-xl', 'border-b', 'border-slate-800/80', 'shadow-lg');
+      }
+    });
+  </script>
+</body>
+</html>
