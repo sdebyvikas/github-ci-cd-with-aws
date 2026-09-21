@@ -1,11 +1,11 @@
-import { Link } from 'react-router-dom'
-import Hero from '../components/Hero'
-import About from '../components/About'
-import Skills from '../components/Skills'
-import Experience from '../components/Experience'
-import Projects from '../components/Projects'
-import Contact from '../components/Contact'
-import { FiArrowRight } from 'react-icons/fi'
+import { Link } from "react-router-dom";
+import Hero from "../components/Hero";
+import About from "../components/About";
+import Skills from "../components/Skills";
+import Experience from "../components/Experience";
+import Projects from "../components/Projects";
+import Contact from "../components/Contact";
+import { FiArrowRight } from "react-icons/fi";
 
 const Home = () => {
   return (
@@ -21,7 +21,7 @@ const Home = () => {
             to="/about"
             className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-blue-500/10 hover:bg-blue-500/20 border border-blue-500/30 text-blue-300 hover:text-white text-xs sm:text-sm font-semibold transition-all duration-300 hover:scale-105 shadow-[0_0_15px_rgba(59,130,246,0.2)]"
           >
-            <span>Learn More About Vikas</span>
+            <span>Learn More About Vikas Kumar</span>
             <FiArrowRight />
           </Link>
         </div>
@@ -72,7 +72,7 @@ const Home = () => {
       {/* Contact Section */}
       <Contact />
     </div>
-  )
-}
+  );
+};
 
-export default Home
+export default Home;

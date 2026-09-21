@@ -1,37 +1,37 @@
-import { Link } from 'react-router-dom'
-import { useEffect, useRef } from 'react'
-import { FiDownload, FiMail, FiArrowRight } from 'react-icons/fi'
-import { useLenis } from '../context/LenisProvider'
-import { useMagnetic } from '../hooks/useMagnetic'
-import gsap from 'gsap'
-import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import { Link } from "react-router-dom";
+import { useEffect, useRef } from "react";
+import { FiDownload, FiMail, FiArrowRight } from "react-icons/fi";
+import { useLenis } from "../context/LenisProvider";
+import { useMagnetic } from "../hooks/useMagnetic";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-const StatItem = ({ endValue, suffix = '+', label }) => {
-  const countRef = useRef(null)
+const StatItem = ({ endValue, suffix = "+", label }) => {
+  const countRef = useRef(null);
 
   useEffect(() => {
-    const el = countRef.current
-    if (!el) return
+    const el = countRef.current;
+    if (!el) return;
 
-    const obj = { val: 0 }
+    const obj = { val: 0 };
     const trigger = ScrollTrigger.create({
       trigger: el,
-      start: 'top 90%',
+      start: "top 90%",
       once: true,
       onEnter: () => {
         gsap.to(obj, {
           val: endValue,
           duration: 2,
-          ease: 'power3.out',
+          ease: "power3.out",
           onUpdate: () => {
-            if (el) el.innerText = Math.floor(obj.val) + suffix
+            if (el) el.innerText = Math.floor(obj.val) + suffix;
           },
-        })
+        });
       },
-    })
+    });
 
-    return () => trigger.kill()
-  }, [endValue, suffix])
+    return () => trigger.kill();
+  }, [endValue, suffix]);
 
   return (
     <div className="flex flex-col">
@@ -45,92 +45,92 @@ const StatItem = ({ endValue, suffix = '+', label }) => {
         {label}
       </p>
     </div>
-  )
-}
+  );
+};
 
 const Hero = () => {
-  const { scrollTo } = useLenis()
-  const heroRef = useRef(null)
-  const imageContainerRef = useRef(null)
-  const btn1Ref = useMagnetic(0.2)
-  const btn2Ref = useMagnetic(0.2)
-  const btn3Ref = useMagnetic(0.2)
+  const { scrollTo } = useLenis();
+  const heroRef = useRef(null);
+  const imageContainerRef = useRef(null);
+  const btn1Ref = useMagnetic(0.2);
+  const btn2Ref = useMagnetic(0.2);
+  const btn3Ref = useMagnetic(0.2);
 
   // Staggered text & entrance animation
   useEffect(() => {
     const ctx = gsap.context(() => {
-      const tl = gsap.timeline({ defaults: { ease: 'power4.out' } })
+      const tl = gsap.timeline({ defaults: { ease: "power4.out" } });
 
       tl.fromTo(
-        '.hero-badge',
+        ".hero-badge",
         { opacity: 0, y: 20 },
-        { opacity: 1, y: 0, duration: 0.8, delay: 0.3 }
+        { opacity: 1, y: 0, duration: 0.8, delay: 0.3 },
       )
         .fromTo(
-          '.hero-greeting',
+          ".hero-greeting",
           { opacity: 0, y: 20 },
           { opacity: 1, y: 0, duration: 0.6 },
-          '-=0.5'
+          "-=0.5",
         )
         .fromTo(
-          '.hero-word',
+          ".hero-word",
           { opacity: 0, y: 40, skewY: 4 },
           { opacity: 1, y: 0, skewY: 0, duration: 0.8, stagger: 0.15 },
-          '-=0.4'
+          "-=0.4",
         )
         .fromTo(
-          '.hero-role',
+          ".hero-role",
           { opacity: 0, y: 20 },
           { opacity: 1, y: 0, duration: 0.7 },
-          '-=0.4'
+          "-=0.4",
         )
         .fromTo(
-          '.hero-desc',
+          ".hero-desc",
           { opacity: 0, y: 25 },
           { opacity: 1, y: 0, duration: 0.8 },
-          '-=0.5'
+          "-=0.5",
         )
         .fromTo(
-          '.hero-btn',
+          ".hero-btn",
           { opacity: 0, y: 20, scale: 0.95 },
           { opacity: 1, y: 0, scale: 1, duration: 0.6, stagger: 0.1 },
-          '-=0.5'
+          "-=0.5",
         )
         .fromTo(
-          '.hero-stats',
+          ".hero-stats",
           { opacity: 0, y: 25 },
           { opacity: 1, y: 0, duration: 0.8 },
-          '-=0.4'
+          "-=0.4",
         )
         .fromTo(
           imageContainerRef.current,
           { opacity: 0, scale: 0.85 },
-          { opacity: 1, scale: 1, duration: 1.2, ease: 'power3.out' },
-          '-=1.2'
-        )
+          { opacity: 1, scale: 1, duration: 1.2, ease: "power3.out" },
+          "-=1.2",
+        );
 
       // Profile image floating animation
-      gsap.to('.hero-avatar', {
+      gsap.to(".hero-avatar", {
         y: -12,
         duration: 4,
         repeat: -1,
         yoyo: true,
-        ease: 'sine.inOut',
-      })
-    }, heroRef)
+        ease: "sine.inOut",
+      });
+    }, heroRef);
 
-    return () => ctx.revert()
-  }, [])
+    return () => ctx.revert();
+  }, []);
 
   // Profile Image Mouse Parallax
   useEffect(() => {
-    const el = imageContainerRef.current
-    if (!el || window.matchMedia('(pointer: coarse)').matches) return
+    const el = imageContainerRef.current;
+    if (!el || window.matchMedia("(pointer: coarse)").matches) return;
 
     const handleMouseMove = (e) => {
-      const { clientX, clientY } = e
-      const x = (clientX - window.innerWidth / 2) * 0.02
-      const y = (clientY - window.innerHeight / 2) * 0.02
+      const { clientX, clientY } = e;
+      const x = (clientX - window.innerWidth / 2) * 0.02;
+      const y = (clientY - window.innerHeight / 2) * 0.02;
 
       gsap.to(el, {
         x: x,
@@ -138,14 +138,14 @@ const Hero = () => {
         rotateX: -y * 0.5,
         rotateY: x * 0.5,
         duration: 0.8,
-        ease: 'power2.out',
-        overwrite: 'auto',
-      })
-    }
+        ease: "power2.out",
+        overwrite: "auto",
+      });
+    };
 
-    window.addEventListener('mousemove', handleMouseMove)
-    return () => window.removeEventListener('mousemove', handleMouseMove)
-  }, [])
+    window.addEventListener("mousemove", handleMouseMove);
+    return () => window.removeEventListener("mousemove", handleMouseMove);
+  }, []);
 
   return (
     <section
@@ -154,7 +154,6 @@ const Hero = () => {
       className="min-h-screen relative flex items-center justify-center px-4 sm:px-6 pt-32 pb-20 overflow-hidden"
     >
       <div className="max-w-7xl w-full grid lg:grid-cols-12 gap-12 lg:gap-8 items-center z-10">
-        
         {/* Left Column: Hero Content */}
         <div className="lg:col-span-7 text-center lg:text-left order-2 lg:order-1">
           {/* Current Company Badge */}
@@ -165,7 +164,7 @@ const Hero = () => {
                 <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-green-400"></span>
               </span>
               <span>
-                Currently Working at{' '}
+                Currently Working at{" "}
                 <span className="font-semibold text-white ml-0.5">
                   Bizclock Infotech Pvt. Ltd.
                 </span>
@@ -180,7 +179,7 @@ const Hero = () => {
           {/* Name with Word-by-Word Reveal */}
           <h1 className="text-4xl sm:text-6xl md:text-7xl font-extrabold tracking-tight font-heading leading-[1.1] mb-3">
             <span className="hero-word inline-block mr-3">Vikas</span>
-            <span className="hero-word inline-block gradient-text">Kumar</span>
+            {/* <span className="hero-word inline-block gradient-text">Kumar</span> */}
           </h1>
 
           <h2 className="hero-role text-xl sm:text-2xl md:text-3xl text-gray-300 font-semibold tracking-tight mt-3">
@@ -189,7 +188,8 @@ const Hero = () => {
 
           <p className="hero-desc text-gray-400 mt-6 leading-relaxed max-w-2xl mx-auto lg:mx-0 text-sm sm:text-base">
             Results-driven MERN Stack Developer with expertise in React.js,
-            Next.js, Redux, Node.js, Express.js, MongoDB, and scalable web applications.
+            Next.js, Redux, Node.js, Express.js, MongoDB, and scalable web
+            applications.
           </p>
 
           {/* Action CTA Buttons */}
@@ -246,7 +246,10 @@ const Hero = () => {
             <div className="absolute w-[280px] h-[280px] sm:w-[380px] sm:h-[380px] bg-gradient-to-tr from-blue-600/30 via-indigo-600/20 to-purple-600/30 blur-[90px] rounded-full animate-glow-pulse"></div>
 
             {/* Orbiting Border Accent */}
-            <div className="absolute inset-0 m-auto w-[260px] h-[260px] sm:w-[350px] sm:h-[350px] lg:w-[390px] lg:h-[390px] rounded-full border border-blue-500/20 animate-spin" style={{ animationDuration: '25s' }}></div>
+            <div
+              className="absolute inset-0 m-auto w-[260px] h-[260px] sm:w-[350px] sm:h-[350px] lg:w-[390px] lg:h-[390px] rounded-full border border-blue-500/20 animate-spin"
+              style={{ animationDuration: "25s" }}
+            ></div>
 
             {/* Profile Avatar Image */}
             <div className="relative z-10 p-2 rounded-full bg-gradient-to-tr from-blue-500 via-indigo-500 to-purple-500 shadow-[0_0_50px_rgba(59,130,246,0.3)] group">
@@ -258,10 +261,9 @@ const Hero = () => {
             </div>
           </div>
         </div>
-
       </div>
     </section>
-  )
-}
+  );
+};
 
-export default Hero
+export default Hero;
